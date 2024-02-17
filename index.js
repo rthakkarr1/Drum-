@@ -1,49 +1,29 @@
+var keySoundMap = {
+    'w': 'Crash',
+    'a': 'Kick',
+    's': 'Snare',
+    'd': 'Tom-1',
+    'j': 'Tom-2',
+    'k': 'Tom-3',
+    'l': 'Tom-4'
+};
 
-for (var i = 0; i < document.querySelectorAll(".drum").length; i++) {
-    (function(index) {
-        document.querySelectorAll(".drum")[index].addEventListener("click", function() {
-            var buttonInnerHTML = this.innerHTML;
-            var crash, kick, snare, tom1, tom2, tom3, tom4;
+document.querySelectorAll(".drum").forEach(function(button) {
+    button.addEventListener("click", function() {
+        var buttonInnerHTML = this.innerHTML;
+        MakeSound(buttonInnerHTML);
+    });
+});
 
-            switch (buttonInnerHTML) {
-                case "Crash":
-                    crash = new Audio("sounds/crash.mp3");
-                    crash.play();
-                    break;
+document.addEventListener("keydown", function(event) {
+    var keyPressed = event.key.toLowerCase();
+    if (keySoundMap.hasOwnProperty(keyPressed)) {
+        var soundName = keySoundMap[keyPressed];
+        MakeSound(soundName);
+    }
+});
 
-                case "Kick":
-                    kick = new Audio("sounds/kick-bass.mp3");
-                    kick.play();
-                    break;
-
-                case "Snare":
-                    snare = new Audio("sounds/snare.mp3");
-                    snare.play();
-                    break;
-
-                case "Tom-1":
-                    tom1 = new Audio("sounds/tom-1.mp3");
-                    tom1.play();
-                    break;
-
-                case "Tom-2":
-                    tom2 = new Audio("sounds/tom-2.mp3");
-                    tom2.play();
-                    break;
-
-                case "Tom-3":
-                    tom3 = new Audio("sounds/tom-3.mp3");
-                    tom3.play();
-                    break;
-
-                case "Tom-4":
-                    tom4 = new Audio("sounds/tom-4.mp3");
-                    tom4.play();
-                    break;
-
-                default:
-                    console.log();
-            }
-        });
-    })(i);
+function MakeSound(soundName) {
+    var audio = new Audio("sounds/" + soundName.toLowerCase() + ".mp3");
+    audio.play();
 }
